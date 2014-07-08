@@ -28,7 +28,7 @@ describe Player do
 
   it "is invalid without a hometown" do
     player = Player.create(hometown: nil)
-    expect(player.errors.messages[:hometown]).to include("can't be blank")  
+    expect(player.errors.messages[:hometown]).to include("can't be blank")
   end
 
   it "is invalid with a duplicate phone number" do
@@ -40,7 +40,7 @@ describe Player do
       lastname: 'Wade',
       phonenumber: '666-6666',
       hometown: 'Chicago')
-    expect(player.errors.messages[:phonenumber]).to include("has already been taken") 
+    expect(player.errors.messages[:phonenumber]).to include("has already been taken")
   end
 
   it "has a #name method which returns the full name of the Player" do
@@ -60,7 +60,7 @@ describe Player do
   end
 
   it "three Players with correct names should exist in the database" do
-    expect(Player.order(:firstname).map_by {|player| player.name }).to eq ["Kobe Bryant", "Michael Jordan", "Scottie Pippen"]
+    expect(Player.order(:firstname).map {|player| player.name }).to eq ["Kobe Bryant", "Kyrie Irving", "LeBron James", "Michael Jordan", "Scottie Pippen"]
   end
 
 end
@@ -95,7 +95,7 @@ describe Sponsor do
     sponsor = Sponsor.create(name: "Lucky Strike",
       product: "bowling balls",
       origin: "New Zealand")
-    expect(sponsor.errors.messages[:name]).to include("has already been taken") 
+    expect(sponsor.errors.messages[:name]).to include("has already been taken")
   end
 end
 
@@ -121,7 +121,7 @@ describe Team do
       city: "Boston")
     team = Team.create(name: "Celtics",
       city: "Auckland")
-    expect(team.errors.messages[:name]).to include("has already been taken") 
+    expect(team.errors.messages[:name]).to include("has already been taken")
   end
 
   it "has many players" do
@@ -136,7 +136,7 @@ describe Team do
   end
 
   it "two teams, Bulls and Lakers should exist in the database" do
-    expect(Team.order(:name).map(&:name)).to eq ["Bulls", "Lakers"]
+    expect(Team.order(:name).map(&:name)).to eq ["Bulls", "Celtics", "Lakers"]
   end
 
   it "the Bulls should have 3 sponsors" do
@@ -151,4 +151,3 @@ describe Team do
     expect(@lakers.sponsors.map(&:origin).uniq).to eq ['USA']
   end
 end
-
